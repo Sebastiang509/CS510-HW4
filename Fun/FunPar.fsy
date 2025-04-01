@@ -1,0 +1,23 @@
+open Absyn
+open FunLex
+
+%token LET IN END IDENT NUM PLUS STAR
+
+%start <Expr> main
+
+%%
+
+main:
+  | let_stmt -> let_stmt
+;
+
+let_stmt:
+  | LET IDENT '=' expr IN expr END -> Let (text, expr1, expr2)
+;
+
+expr:
+  | NUM -> Num (num)
+  | IDENT -> Var (text)
+  | expr PLUS expr -> Add (expr1, expr2)
+  | expr STAR expr -> Mul (expr1, expr2)
+;
